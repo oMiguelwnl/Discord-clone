@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 
 export const initialProfile = async () => {
   const user = await currentUser();
+
   if (!user) {
     return redirectToSignIn();
   }
@@ -26,5 +27,6 @@ export const initialProfile = async () => {
       email: user.emailAddresses[0].emailAddress,
     },
   });
+
   return newProfile;
 };

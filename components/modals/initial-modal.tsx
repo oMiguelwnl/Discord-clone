@@ -1,9 +1,10 @@
 "use client";
+
 import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 import {
   Dialog,
@@ -13,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import {
   Form,
   FormControl,
@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
+
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Server name is required.",
@@ -37,6 +38,7 @@ const formSchema = z.object({
 
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -56,6 +58,7 @@ export const InitialModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post("/api/servers", values);
+
       form.reset();
       router.refresh();
       window.location.reload();
@@ -75,13 +78,11 @@ export const InitialModal = () => {
           <DialogTitle className="text-2xl text-center font-bold">
             Customize your server
           </DialogTitle>
-
           <DialogDescription className="text-center text-zinc-500">
             Give your server a personality with a name and an image. You can
             always change it later.
           </DialogDescription>
         </DialogHeader>
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
@@ -102,13 +103,14 @@ export const InitialModal = () => {
                   )}
                 />
               </div>
+
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Server Name
+                      Server name
                     </FormLabel>
                     <FormControl>
                       <Input
